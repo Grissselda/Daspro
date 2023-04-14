@@ -4,7 +4,7 @@ from command import *
 role=0
 Keluar=False
 while Keluar==False :
-    data_user=read('tes.csv')
+    data_user=read('user.csv')
     data_candi=read('candi.csv')
     data_bahan=read('bahan_bangunan.csv')
     command=input('>>> ')
