@@ -20,3 +20,11 @@ while Keluar==False :
         help(role)
     elif command=="exit":
         Keluar=exit(Keluar)
+    elif command == "summonjin":
+        write('user.csv', summonjin())
+    elif command == "hapusjin":
+        data_user = hapusjin()
+    elif command == "ubahjin":
+        data_user = ubahjin()
+    elif command == "laporanjin":
+        laporanjin()
