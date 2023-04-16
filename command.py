@@ -124,10 +124,56 @@ def kumpul():
 def batchkumpul():
     return 0
 
-def laporanjin():
-    return 0
+def find_jinterajin_jintermalas(data):
+    list_jin_pembangun = []
+    for i in range(1, length(data)):
+        find = False
+        for j in range(length(list_jin_pembangun)):
+            if (data[i][1] == list_jin_pembangun[j][0]):
+                find = True
+                list_jin_pembangun[j][1] += 1
+        if find == False:
+            list_jin_pembangun = append(list_jin_pembangun, [[data[i][1], 1]])
+    jin_terajin = ''
+    jin_termalas = ""
+    candi_terbanyak = 0
+    candi_tersedikit = 101
+    for i in range(length(list_jin_pembangun)):
+        if list_jin_pembangun[i][1] > candi_terbanyak:
+            candi_terbanyak = list_jin_pembangun[i][1]
+            jin_terajin = list_jin_pembangun[i][0]
+        elif list_jin_pembangun[i][1] == candi_terbanyak:
+            if jin_terajin > list_jin_pembangun[i][0]:
+                jin_terajin = list_jin_pembangun[i][0]
+        if list_jin_pembangun[i][1] < candi_tersedikit:
+            candi_tersedikit = list_jin_pembangun[i][1]
+            jin_termalas = list_jin_pembangun[i][0]
+        elif list_jin_pembangun[i][1] == candi_tersedikit:
+            if jin_termalas < list_jin_pembangun[i][0]:
+                jin_termalas = list_jin_pembangun[i][0]
+    return jin_terajin, jin_termalas
 
-def laporancandi():
+
+def laporanjin():
+    data_user = read('user.csv')
+    data_candi = read('candi.csv')
+    data_bahan_bangunan = read('bahan_bangunan.csv')
+    jin_pembangun_amount = 0
+    jin_pengumpul_amount = 0
+    jin_terajin, jin_termalas = find_jinterajin_jintermalas(data_candi)
+    for i in range(length(data_user)):
+        if (data_user[i][2] == "1"):
+            jin_pembangun_amount += 1
+        if (data_user[i][2] == "2"):
+            jin_pengumpul_amount += 1
+    print(f"Total Jin: {jin_pembangun_amount+jin_pengumpul_amount}")
+    print(f"Total Jin Pengumpul: {jin_pengumpul_amount}")
+    print(f"Total Jin Pembangun: {jin_pembangun_amount}")
+    print(f"Jin Terajin: {jin_terajin}")
+    print(f"Jin Termalas: {jin_termalas}")
+    print(f"Jumlah Pasir: {data_bahan_bangunan[1][2]}")
+    print(f"Jumlah Batu: {data_bahan_bangunan[2][2]}")
+    print(f"Jumlah Air: {data_bahan_bangunan[3][2]}")
     return 0
 
 def hancurkancandi():
