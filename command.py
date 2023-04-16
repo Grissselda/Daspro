@@ -116,7 +116,34 @@ def ubahjin():
     return data_user
 
 def bangun():
-    return 0
+    if (login):
+        if jin_type != "2" :
+            print("Bangun hanya dapat diakses oleh akun Jin Pembangun.")
+            return
+    else:
+        print("Bangun hanya dapat diakses oleh akun Jin Pembangun.")
+    #Penyamarataan jumlah bahan yang dibutuhkan
+    pasir = random.randint(1,5)
+    batu = random.randint(1,5)
+    air = random.randint(1,5)
+
+    jumlah_candi = length(data_candi) - 1
+    if ((int(data_bahan[1][2]) < pasir) or (int(data_bahan)[2][2] < batu) or (int(data_bahan)[3][2] < air)):
+        print("Bahan bangunan tidak mencukupi.")
+        print("Candi tidak dapat dibangun!)
+    elif (jumlah_candi >= 100):
+        print("Candi tidak dapat dibangun!")
+        print("Sisa candi yang perlu dibangun: 0.)"
+    else:
+        print("Candi berhasil dibangun.")
+        print(f"Sisa candi yang perlu dibangun:{100-(jumlah_candi+1)}")
+    #Mengupdate data global
+    data_bahan[1][2] = int(data_bahan[1][2]) - pasir
+    data_bahan[2][2] = int(data_bahan[2][2]) - batu
+    data_bahan[3][2] = int(data_bahan[3][2]) - air
+    id = create_id()
+    candi = [id,data_user[0],pasir,batu,air]
+    data_candi.append(candi)
 
 def kumpul():
     return 0
