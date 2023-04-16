@@ -33,13 +33,87 @@ def logout(role):
     return role
 
 def summonjin():
-    return 0
+    data_user = read('user.csv')
+    if length(data_user) <= 102:
+        print("Jenis jin yang dapat dipanggil:")
+        print("(1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
+        print("(2) Pembangun - Bertugas membangun candi")
+        jin_type = input("Masukkan nomor jenis jin yang ingin dipanggil:")
+        while jin_type != "1" and jin_type != "2":
+            print(f"Tidak ada jenis jin bernomor “{jin_type}”!")
+            jin_type = input("Masukkan nomor jenis jin yang ingin dipanggil:")
+        if jin_type == "1":
+            print("Memilih jin “Pengumpul”.")
+        else:  # jin_type=2
+            print("Memilih jin “Pembangun”.")
+        jin_username = input("Masukkan username jin: ")
+        jin_already = False
+        for i in range(length(data_user)):
+            if jin_username == data_user[i][0]:
+                jin_already = True
+        while jin_already == True:
+            jin_username = input("Masukkan username jin: ")
+            jin_already = False
+            for i in range(length(data_user)):
+                if jin_username == data_user[i][0]:
+                    jin_already = True
+        jin_password = input("Masukkan password jin: ")
+        while length(jin_password) > 25 or length(jin_password) < 5:
+            print("Password panjangnya harus 5-25 karakter!")
+            jin_password = input("Masukkan password jin: ")
+        print("Mengumpulkan sesajen...")
+        print("Menyerahkan sesajen...")
+        print("Membacakan mantra...")
+        print(f"Jin {jin_username} berhasil dipanggil!")
+    else:  # jumlah jin telah melebihi 100
+        print("Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
+    return (jin_username, jin_password, jin_type)
+
 
 def hapusjin():
-    return 0
+    jin_username = input("Masukkan username jin : ")
+    data_user = read('user.csv')
+    data_candi = read('candi.csv')
+    jin_already = False
+    for i in range(1, length(data_user)):
+        if jin_username == data_user[i][0]:
+            jin_already = True
+            find_jin = i
+    if jin_already == True:
+        jin_confirm = input(
+            "Apakah anda yakin ingin menghapus jin dengan username Jin1 (Y/N)?")
+        if jin_confirm == "Y":
+            delete('user.csv', find_jin)
+            for i in range(1, length(data_candi)):
+                if data_candi[i][1] == jin_username:
+                    delete('candi.csv', i)
+    else:  # jin_already==False
+        print("Tidak ada jin dengan username tersebut.")
+    return data_user
+
 
 def ubahjin():
-    return 0
+    jin_username = input("Masukkan username jin :")
+    data_user = read('user.csv')
+    jin_already = False
+    for i in range(1, length(data_user)):
+        if jin_username == data_user[i][0]:
+            jin_already = True
+            find_jin = i
+    if jin_already == True:
+        if data_user[find_jin][2] == "1":
+            jin_confirm = input(
+                "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
+            if jin_confirm == "Y":
+                data_user[find_jin][2] = "2"
+        else:  # tipe jin pengumpul
+            jin_confirm = input(
+                "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
+            if jin_confirm == "Y":
+                data_user[find_jin][2] = "1"
+    else:
+        print("Tidak ada jin dengan username tersebut.")
+    return data_user
 
 def bangun():
     return 0
